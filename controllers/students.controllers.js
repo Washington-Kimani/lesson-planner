@@ -1,10 +1,14 @@
 import { validationResult } from "express-validator";
-import { createStudent } from "../services/student.services.js";
+import { createStudent, getAllStudents } from "../services/student.services.js";
+
+const students = await getAllStudents();
+// console.log(students)
 
 export const getCreateStudent = (req, res) => {
     return res.render("new_student", {
         errors: req.flash("errors"),
         title: 'Register New Student',
+        students,
     });
 };
 

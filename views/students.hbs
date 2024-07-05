@@ -4,71 +4,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher detail</title>
-    <!--    general styles-->
+    <title>{{title}}</title>
+    {{!-- general styles --}}
     <link rel="stylesheet" href="/styles/style.css">
+    {{!-- tailwind --}}
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .login-container input {
-            background-color: white;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
             text-align: center;
         }
 
-        .login-container input[type="submit"] {
-            width: 90%;
-            padding: 10px;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
+        .btn:hover {
+            background-color: #0056b3;
         }
 
-        .login-container input[type="cancel"] {
-            width: 90%;
-            padding: 10px;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
 
-        .login-container input[type="submit"]:hover {
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type="text" "value"] {
+            width: 80%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .search-container button {
+            padding: 8px 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
             background-color: #0056b3;
         }
     </style>
+</head>
 
 <body>
-    <table>
-        <form>
-            <label for="firstname"> First Name: </label><br />
-            <input type="text" id="firstname" name="firstname" /><br />
-            <label for="secondname">Second Name: </label><br />
-            <input type="text" id="secondname" name="secondname" /><br>
-            <label for="lastname">Last Name: </label><br />
-            <input type="text" id="lastname" name="lastname" /><br>
-            <label for="Admission name"> Admission Name: </label><br />
-            <input type="text" id="Admission name" name="Admissionname" /><br />
-            <label for="Phone number"> Phone number: </label><br />
-            <input type="text" id="Phone number" name="Phone number" /><br />
-            <label for="Grade">Grad:e</label><br />
-            <input type="text" id="Grade" name="Grade" /><br />
-            <label for="Home Address">Home Address: </label><br />
-            <input type="text" id="Home Address" name="Home Address" /><br />
-            <label for="Comment">Comment:</label><br />
-            <input type="Comment" id="Comment" name="Comment" /><br />
-            <label for="Subject 2">Subject 2:</label><br />
-            <input type="Subject 2" id="Subject 2" name="Subject 2" /><br />
-            <input type="submit" value="submit">
-            <input type="submit" value="cancel">
+    <div class="container search-container">
+        <form action="search_results.html" method="get">
+            <input type="text" name="query" placeholder="Search details" />
+            <button type="submit">search</button>
         </form>
-    </table>
+        <h1>Student Details</h1>
+        <h2><a href="/new_student" class="px-1 py-2 mt-6 bg-blue-600 rounded hover:bg-blue-700">Register New Student</a></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student name</th>
+                    <th>Admission number</th>
+                    <th>Parent/Guardian name</th>
+                    <th>Phone number</th>
+                    <th>Home address</th>
+                    <th>Comment</th>
+                    <th>Subject 1</th>
+                    <th>Subject 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{students}}
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

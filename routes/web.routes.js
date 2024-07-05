@@ -20,7 +20,13 @@ export const initWebRoutes = (app) => {
         res.render("dashboard", {title: 'Dashboard', user: req.user});
     });
 
-    router.get("/teachers",checkLoggedIn);
+    router.get("/teachers",checkLoggedIn, (req,res)=>{
+        res.render("teachers", {title: 'Teachers', user: req.user});
+    });
+
+    router.get("/students", checkLoggedIn, (req,res)=>{
+        res.render("students", {title: 'Students', user: req.user});
+    });
 
     router.get("/new_student",checkLoggedIn, getCreateStudent);
     router.post("/new_student", checkLoggedIn, createNewStudent);
