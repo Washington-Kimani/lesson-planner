@@ -12,12 +12,15 @@ export const createUser = (data) => {
             const hashed = await bcrypt.hashSync(password, 10);
 
             //create a new account
-            pool.query(
-                'INSERT INTO teachers set ? ', [fullnames,regNumber,email,hashed],(err, rows)=>{
+            await pool.query(
+                'INSERT INTO teachers (fullnames, regNumber, email, password, phone, gender, DOB, subject1, subject2) VALUES (?,?,?,?,?,?,?,?,?)',
+                [fullnames,regNumber,email,hashed,phone,gender,DOB,subject1,subject2],
+                (err, rows)=>{
                     if (err) {
                         reject(false)
+                    }else{
+                        resolve(rows);
                     }
-                    resolve("Create a new user successful");
                 }
             );
         }
@@ -25,9 +28,9 @@ export const createUser = (data) => {
 };
 
 let checkExistEmail = (email) => {
-    return new Promise((resolve, reject) => {
+    return new Promise( async (resolve, reject) => {
         try {
-            pool.query(`SELECT * FROM users WHERE email = ?`, [email], (err, rows) => {
+            await pool.query(`SELECT * FROM teachers WHERE email = ?`, [email], (err, rows) => {
                     if (err) {
                         reject(err)
                     }

@@ -23,9 +23,9 @@ export const createNewUser = async (req, res) => {
     }
 
     //create a new user
-    let newUser = req.body;
+    let data = req.body;
     try {
-        await createUser(newUser);
+        await createUser(data);
         return res.redirect("/login");
     } catch (err) {
         req.flash("errors", err);

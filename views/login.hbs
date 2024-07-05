@@ -72,12 +72,16 @@
     <div class="login-container">
         <div class="cancel-container">
             <form action="/login" method="post">
-                <input type="email" placeholder="Username" name="email"><br />
-                <input type="password" placeholder="Password" name="password"><br />
+                <input type="email" placeholder="Username" name="email" required><br />
+                <input type="password" placeholder="Password" name="password" required><br />
                 <div>
                     <input type="submit" value="login">
                 </div>
             </form>
+            <section class="mt-4 flex gap-3">
+                <p>Don't have an account?&nbsp;</p>
+                <a href="/register" class="text-green-600">Register</a>
+            </section>
         </div>
     </div>
 </body>

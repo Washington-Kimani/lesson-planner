@@ -2,9 +2,8 @@ import express from 'express';
 import passport from 'passport';
 import { initPassportLocal } from '../controllers/passport.controllers.js';
 import { validateRegister } from '../validation/auth.validation.js';
-import { createUser } from '../services/register.services.js';
 import { checkLoggedIn, checkLoggedOut, getPageLogin, postLogOut } from '../controllers/login.controllers.js';
-import { getPageRegister } from '../controllers/register.controllers.js';
+import { createNewUser, getPageRegister } from '../controllers/register.controllers.js';
 
 
 // Init all passport
@@ -25,7 +24,7 @@ export const initWebRoutes = (app) => {
     }));
 
     router.get("/register", getPageRegister);
-    router.post("/register", validateRegister, createUser);
+    router.post("/register", createNewUser);
     router.post("/logout", postLogOut);
     return app.use("/", router);
 };
