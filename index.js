@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-import connectFlash from 'connect-flash';
+import flash from 'connect-flash';
 
 //import routes
 import { initWebRoutes } from './routes/web.routes.js';
@@ -45,7 +45,7 @@ app.use(express.static('public'));
 app.set('view engine', 'hbs');
 
 //Enable flash message
-app.use(connectFlash());
+app.use(flash());
 
 //passport setup
 app.use(passport.initialize());

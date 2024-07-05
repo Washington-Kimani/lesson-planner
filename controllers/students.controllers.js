@@ -1,14 +1,14 @@
 import { validationResult } from "express-validator";
-import { createUser } from "../services/register.services.js";
+import { createStudent } from "../services/student.services.js";
 
-export const getPageRegister = (req, res) => {
-    return res.render("register", {
+export const getCreateStudent = (req, res) => {
+    return res.render("new_student", {
         errors: req.flash("errors"),
-        title: 'Registration Page',
+        title: 'Register New Student',
     });
 };
 
-export const createNewUser = async (req, res) => {
+export const createNewStudent = async (req, res) => {
     // Validate required fields
     let errorsArr = [];
     let validationErrors = validationResult(req);
@@ -18,17 +18,17 @@ export const createNewUser = async (req, res) => {
             errorsArr.push(item.msg);
         });
         req.flash("errors", errorsArr);
-        return res.redirect("/register");
+        return res.redirect("/new_student");
     }
 
     // Create a new user
-    let data = req.body;
+    let student = req.body;
     try {
-        await createUser(data);
-        return res.redirect("/login");
+        await createStudent(student);
+        return res.redirect("/students");
     } catch (err) {
         console.error('Registration error:', err);
         req.flash("errors", err.message); // Use err.message to capture the error message
-        return res.redirect("/register");
+        return res.redirect("/new_student");
     }
 };
