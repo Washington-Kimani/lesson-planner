@@ -1,10 +1,29 @@
 import { pool } from "../configs/db.config.js";
 
-export const createStudent = async (student) => {
-    try {
-        const isEmailExist = await checkStudentExists(student.admission_number);
 
-        if (isEmailExist) {
+export const getAllStudents = async () => {
+    try {
+        const [rows] = await pool.query(`SELECT * FROM students`);
+        return rows;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const search = async query => {
+    try {
+        const [rows] = await pool.query(`SELECT * FROM students WHERE full_name LIKE '%${query}%'`);
+        return rows;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const createStudent = async student => {
+    try {
+        const isExist = await checkStudentExists(student.admission_number);
+
+        if (isExist) {
             throw new Error(`This student "${student.full_name}" has already been registered`);
         }
 
@@ -19,11 +38,11 @@ export const createStudent = async (student) => {
         return `Student created successfully`;
 
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
 
-const checkStudentExists = async (admission_number) => {
+const checkStudentExists = async admission_number => {
     try {
         const [rows] = await pool.query(`SELECT * FROM students WHERE admission_number = ?`, [admission_number]);
         return rows.length > 0;
@@ -32,11 +51,11 @@ const checkStudentExists = async (admission_number) => {
     }
 };
 
-export const getAllStudents = async () => {
+export const deleteStudentById = id => {
     try {
-        const [rows] = await pool.query(`SELECT * FROM students`);
-        return rows;
+        const result = pool.query(`DELETE FROM students WHERE id = ?`, [id]);
+        return result;
     } catch (error) {
         throw error;
     }
-};
+}

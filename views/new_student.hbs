@@ -10,84 +10,102 @@
     {{!-- tailwind --}}
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <style>
+
+    </style>
+
 <body>
-    <form action="/new_student" method="post" class="w-5/6 lg:w-2/3 mx-auto mt-6 justify-center items-center py-2 px-12 rounded-lg border border-white-300 shadow-lg shadow-cyan-500/50 backdrop-blur-sm">
-        {{#if errors}}
-        {{#each errors}}
-        <div class="text-red-500" role="alert">
-            {{this}}
-        </div>
-        {{/each}}
-        {{/if}}
-        <section class="w-full flex flex-col lg:flex-row gap-3">
-            <div class="w-full lg:w-1/2 mb-4">
-                <label for="full_name" class="block text-sm font-medium text-black">Full Name:</label>
-                <input type="text" id="full_name" name="full_name"
-                    class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Enter Full Name" required />
+    <div
+        class="fixed w-full top-0 left-0 flex justify-center items-center bg-gradient-to-b from-emerald-500 via-emerald-300 to-teal-900 py-4 px-6">
+        <nav class="flex space-x-4">
+            <a href="/" class="text-white hover:text-pink-400">Dashboard</a>
+            <a href="/teachers" class="text-white hover:text-pink-400">Teachers</a>
+            <a href="/students" class="text-white hover:text-pink-400">Students</a>
+            <a href="/subjects" class="text-white hover:text-pink-400">Subjects</a>
+        </nav>
+    </div>
+
+    <div class="mt-20">
+        <form action="/new_student" method="post"
+            class="w-5/6 lg:w-2/3 mx-auto mt-6 justify-center items-center py-2 px-12 rounded-lg border border-white-300 shadow-lg shadow-cyan-500/50 backdrop-blur-sm">
+            {{#if errors}}
+            {{#each errors}}
+            <div class="text-red-500" role="alert">
+                {{this}}
             </div>
-            
-            <div class="w-full lg:w-1/2 mb-4">
-                <label for="admission_number" class="block text-sm font-medium text-black">Admission Number:</label>
-                <input type="text" id="admission_number" name="admission_number"
-                    class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Enter Admission Number" required />
+            {{/each}}
+            {{/if}}
+            <section class="w-full flex flex-col lg:flex-row gap-3">
+                <div class="w-full lg:w-1/2 mb-4">
+                    <label for="full_name" class="block text-sm font-medium text-black">Full Name:</label>
+                    <input type="text" id="full_name" name="full_name"
+                        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        placeholder="Enter Full Name" required />
+                </div>
+        
+                <div class="w-full lg:w-1/2 mb-4">
+                    <label for="admission_number" class="block text-sm font-medium text-black">Admission Number:</label>
+                    <input type="text" id="admission_number" name="admission_number"
+                        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        placeholder="Enter Admission Number" required />
+                </div>
+            </section>
+        
+            <section class="w-full flex flex-col lg:flex-row gap-3">
+                <div class="w-full lg:w-1/2 mb-4">
+                    <label for="guardian_or_parent_number" class="block text-sm font-medium text-black">Phone
+                        Number:</label>
+                    <input type="text" id="guardian_or_parent_number" name="guardian_or_parent_number"
+                        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        placeholder="Enter Parent/Guardian Phone Number" required />
+                </div>
+        
+                <div class="w-full lg:w-1/2 mb-4">
+                    <label for="grade" class="block text-sm font-medium text-black">Grade:</label>
+                    <input type="text" id="grade" name="grade"
+                        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        placeholder="Enter Grade" required />
+                </div>
+            </section>
+        
+            <section class="w-full flex flex-col lg:flex-row gap-3">
+                <div class="w-full lg:w-1/2 mb-4">
+                    <label for="home_address" class="block text-sm font-medium text-black">Home Address:</label>
+                    <input type="text" id="home_address" name="home_address"
+                        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        placeholder="Enter Home Address" required />
+                </div>
+        
+                <div class="w-full lg:w-1/2 mb-4">
+                    <label for="comments" class="block text-sm font-medium text-black">Comment:</label>
+                    <input type="text" id="comments" name="comments"
+                        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        placeholder="Enter Comment" required />
+                </div>
+            </section>
+        
+            <section class="w-full flex flex-col lg:flex-row gap-3">
+                <div class="w-full lg:w-1/2 mb-4">
+                    <label for="subject_one" class="block text-sm font-medium text-black">Subject One:</label>
+                    <input type="text" id="subject_one" name="subject_one"
+                        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        placeholder="Enter Subject One" required />
+                </div>
+        
+                <div class="w-full lg:w-1/2 mb-4">
+                    <label for="subject_two" class="block text-sm font-medium text-black">Subject Two:</label>
+                    <input type="text" id="subject_two" name="subject_two"
+                        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        placeholder="Enter Subject Two" required />
+                </div>
+            </section>
+        
+            <div class="flex justify-center">
+                <button type="submit" class="w-1/4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Submit
+                    Student</button>
             </div>
-        </section>
-    
-        <section class="w-full flex flex-col lg:flex-row gap-3">
-            <div class="w-full lg:w-1/2 mb-4">
-                <label for="guardian_or_parent_number" class="block text-sm font-medium text-black">Phone Number:</label>
-                <input type="text" id="guardian_or_parent_number" name="guardian_or_parent_number"
-                    class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Enter Parent/Guardian Phone Number" required />
-            </div>
-            
-            <div class="w-full lg:w-1/2 mb-4">
-                <label for="grade" class="block text-sm font-medium text-black">Grade:</label>
-                <input type="text" id="grade" name="grade"
-                    class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Enter Grade" required />
-            </div>
-        </section>
-    
-        <section class="w-full flex flex-col lg:flex-row gap-3">
-            <div class="w-full lg:w-1/2 mb-4">
-                <label for="home_address" class="block text-sm font-medium text-black">Home Address:</label>
-                <input type="text" id="home_address" name="home_address"
-                    class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Enter Home Address" required />
-            </div>
-            
-            <div class="w-full lg:w-1/2 mb-4">
-                <label for="comment" class="block text-sm font-medium text-black">Comment:</label>
-                <input type="text" id="comment" name="comment" rows="3"
-                    class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Enter Comment" required />
-            </div>
-        </section>
-    
-        <section class="w-full flex flex-col lg:flex-row gap-3">
-            <div class="w-full lg:w-1/2 mb-4">
-                <label for="subject_one" class="block text-sm font-medium text-black">Subject One:</label>
-                <input type="text" id="subject_one" name="subject_one"
-                    class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Enter Subject One" required />
-            </div>
-            
-            <div class="w-full lg:w-1/2 mb-4">
-                <label for="subject_two" class="block text-sm font-medium text-black">Subject Two:</label>
-                <input type="text" id="subject_two" name="subject_two"
-                    class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Enter Subject Two" required />
-            </div>
-        </section>
-    
-        <div class="flex justify-center">
-            <button type="submit"
-                class="w-1/4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Submit Student</button>
-        </div>
-    </form>
+        </form>
+    </div>
 
 </body>
 

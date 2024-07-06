@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/styles/style.css">
     {{!-- tailwind --}}
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/js/search.js" defer></script>
     <style>
         .container {
             max-width: 800px;
@@ -84,45 +85,66 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-
-        .search-container button {
-            padding: 8px 16px;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .search-container button:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
 
 <body>
-    <div class="container search-container">
-        <form action="search_results.html" method="get">
-            <input type="text" name="query" placeholder="Search details" />
-            <button type="submit">search</button>
-        </form>
-        <h1>Student Details</h1>
-        <h2><a href="/new_student" class="px-1 py-2 mt-6 bg-blue-600 rounded hover:bg-blue-700">Register New Student</a></h2>
+    <div
+        class="fixed w-full top-0 left-0 flex justify-center items-center bg-gradient-to-b from-emerald-500 via-emerald-300 to-teal-900 py-4 px-6">
+        <nav class="flex space-x-4">
+            <a href="/" class="text-white hover:text-pink-400">Dashboard</a>
+            <a href="/teachers" class="text-white hover:text-pink-400">Teachers</a>
+            <a href="/students" class="text-white hover:text-pink-400">Students</a>
+            <a href="/subjects" class="text-white hover:text-pink-400">Subjects</a>
+        </nav>
+    </div>
+    <div class="container search-container mt-20">
+        <input type="search" class="py-1 px-2" name="query" id="search" placeholder="search students"/>
+        <div class="w-full flex items-center justify-around mt-6">
+            <h1 class="text-lg font-bold">
+                {{user.fullnames}} All Students:
+            </h1>
+            <h2>
+                <a href="/new_student" class="p-1 mt-6 bg-blue-600 rounded hover:bg-blue-700">
+                Register New Student
+                </a>
+            </h2>
+        </div>
         <table>
             <thead>
                 <tr>
-                    <th>Student name</th>
-                    <th>Admission number</th>
-                    <th>Parent/Guardian name</th>
-                    <th>Phone number</th>
+                    <th>#</th>
+                    <th>Student Name</th>
+                    <th>Admission<br>Number</th>
+                    <th>Parent/Guardian<br>Number</th>
+                    <th>Grade</th>
                     <th>Home address</th>
                     <th>Comment</th>
                     <th>Subject 1</th>
                     <th>Subject 2</th>
+                    <th>Remove</th>
                 </tr>
             </thead>
-            <tbody>
-                {{students}}
+            <tbody id="results">
+                {{#each students}}
+                <tr>
+                    <td>{{this.index}}</td>
+                    <td>{{this.full_name}}</td>
+                    <td>{{this.admission_number}}</td>
+                    <td>{{this.guardian_or_parent_number}}</td>
+                    <td>{{this.grade}}</td>
+                    <td>{{this.home_address}}</td>
+                    <td>{{this.comments}}</td>
+                    <td>{{this.subject_one}}</td>
+                    <td>{{this.subject_two}}</td>
+                    <td>
+                        <form action="/delete/:{{this.id}}" method="post">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
             </tbody>
         </table>
     </div>

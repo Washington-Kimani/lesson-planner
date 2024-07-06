@@ -3,8 +3,8 @@ import passport from 'passport';
 import { initPassportLocal } from '../controllers/passport.controllers.js';
 import { checkLoggedIn, checkLoggedOut, getPageLogin, postLogOut } from '../controllers/login.controllers.js';
 import { createNewUser, getPageRegister } from '../controllers/register.controllers.js';
-import { createNewStudent, getCreateStudent } from '../controllers/students.controllers.js';
-
+import { allStudents, createNewStudent, deleteStudent, getCreateStudent, seachStudent } from '../controllers/students.controllers.js';
+import { allTeachers } from '../controllers/teacher.controllers.js';
 
 // Init all passport
 initPassportLocal();
@@ -12,26 +12,38 @@ initPassportLocal();
 const router = express.Router();
 
 export const initWebRoutes = (app) => {
-    router.get("/", checkLoggedIn, (req,res)=>{
-        res.render("home", {title: 'HomePage', user: req.user});
-    });
-
-    router.get("/dashboard", checkLoggedIn, (req, res)=>{
+    /* NAVIGATION RELATED ROUTES */
+    //home route
+    router.get("/", checkLoggedIn, (req, res)=>{
         res.render("dashboard", {title: 'Dashboard', user: req.user});
     });
 
-    router.get("/teachers",checkLoggedIn, (req,res)=>{
-        res.render("teachers", {title: 'Teachers', user: req.user});
-    });
+    router.get("/teachers",checkLoggedIn, allTeachers);
 
-    router.get("/students", checkLoggedIn, (req,res)=>{
-        res.render("students", {title: 'Students', user: req.user});
-    });
+    /* ALL STUDENT RELATED ROUTES    */
+    //get all students route
+    router.get("/students", checkLoggedIn, allStudents);
 
+    //get create student route page
     router.get("/new_student",checkLoggedIn, getCreateStudent);
+
+    //actually create new student route
     router.post("/new_student", checkLoggedIn, createNewStudent);
+    
+    //search for a student by name
+    router.get('/search/', checkLoggedIn, seachStudent);
+
+    //delete a student
+    router.post('/delete/:id', checkLoggedIn, deleteStudent);
+
+    //show profile
+    router.get('/profile', checkLoggedIn, (req,res)=>{
+        res.render('profile', {title: 'Profile', user: req.user});
+    });
 
 
+    /* AUTH ROUTES */
+    //login routes
     router.get("/login", checkLoggedOut, getPageLogin);
     router.post("/login", passport.authenticate("local", {
         successRedirect: "/",
@@ -40,6 +52,7 @@ export const initWebRoutes = (app) => {
         failureFlash: true
     }));
 
+    //registration related routes
     router.get("/register", getPageRegister);
     router.post("/register", createNewUser);
     router.post("/logout", postLogOut);

@@ -5,6 +5,7 @@ import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import flash from 'connect-flash';
+import cors from 'cors';
 
 //import routes
 import { initWebRoutes } from './routes/web.routes.js';
@@ -37,6 +38,7 @@ app.use(session({
 //middlewares
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cors());
 
 app.use(express.static('public'));
 

@@ -1,38 +1,59 @@
 import { validationResult } from "express-validator";
-import { createStudent, getAllStudents } from "../services/student.services.js";
+import { createStudent,deleteStudentById , getAllStudents, search } from "../services/student.services.js";
 
-const students = await getAllStudents();
-// console.log(students)
+export const allStudents = async (req, res) => {
+    const students = await getAllStudents();
+    // Add an index starting from 1 to each student object
+    const studentsWithIndex = students.map((student, index) => ({
+        ...student,
+        index: index + 1
+    }));
+    return res.render("students", { title: "All Students", students: studentsWithIndex, user: req.user });
+}
+
+export const seachStudent = async (req, res) => {
+    const { query } = req.query;
+    const results = await search(query);
+    return res.send(results);
+}
 
 export const getCreateStudent = (req, res) => {
     return res.render("new_student", {
         errors: req.flash("errors"),
         title: 'Register New Student',
-        students,
     });
 };
 
+
 export const createNewStudent = async (req, res) => {
     // Validate required fields
-    let errorsArr = [];
-    let validationErrors = validationResult(req);
-    if (!validationErrors.isEmpty()) {
-        let errors = Object.values(validationErrors.mapped());
-        errors.forEach((item) => {
-            errorsArr.push(item.msg);
-        });
-        req.flash("errors", errorsArr);
-        return res.redirect("/new_student");
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        req.flash('errors', errors.array().map(err => err.msg));
+        return res.redirect('/new_student');
     }
 
-    // Create a new user
-    let student = req.body;
+    // Create new student
+    const studentData = req.body;
     try {
-        await createStudent(student);
-        return res.redirect("/students");
-    } catch (err) {
-        console.error('Registration error:', err);
-        req.flash("errors", err.message); // Use err.message to capture the error message
-        return res.redirect("/new_student");
+        await createStudent(studentData);
+        // Redirect to students list immediately after creation
+        return res.redirect('/students');
+    } catch (error) {
+        console.error('Error creating student:', error);
+        req.flash('errors', error.message);
+        return res.redirect('/new_student');
     }
 };
+
+export const deleteStudent = async (req, res) => {
+    const { id } = req.params;
+    try {
+        await deleteStudentById(id);
+        return res.redirect('/students');
+    } catch (error) {
+        console.error('Error deleting student:', error);
+        req.flash('errors', error.message);
+        return res.redirect('/students');
+    }
+}
