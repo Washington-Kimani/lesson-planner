@@ -103,8 +103,16 @@
             <a href="/profile" class="box active" id="teacher-detail">Teacher Details</a>
             <a href="/students" class="box active" id="student-detail">Student Details</a>
             <div class="line"></div>
-            <a href="/subject_one" class="box active" id="subject-1">{{user.subject_one}}</a>
-            <a href="/subject_two" class="box active" id="subject-2">{{user.subject_two}}</a>
+
+            <div class="w-full flex flex-col justify-around items-start">
+                <h2>My Current Subjects:</h2>
+                <section class="w-full flex">
+                    <ul class="list-disc">
+                        <li class="pl-4 w-full flex items-start">{{user.subject_one}}</li>
+                        <li class="pl-4 w-full flex items-start">{{user.subject_two}}</li>
+                    </ul>
+                </section>
+            </div>
         </div>
         <form method="POST" action="/logout" class="w-full text-center">
             <button type="submit" class="px-3 py-1 bg-blue-400 rounded shadow-lg shadow-black-500 hover:bg-blue-700">Log

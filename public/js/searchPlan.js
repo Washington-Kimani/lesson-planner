@@ -19,10 +19,9 @@ function loadData(query = '') {
                     <div class="border border-gray-200 rounded-lg overflow-hidden shadow-lg">
                         <div class="p-6">
                             <h2 class="text-xl flex gap-2 font-bold mb-2">
-                                <p>${index+1}</p>
+                                <p>${index+1}.</p>
                                 <p>${result.lesson_title}</p> <!-- Use result object for lesson_title -->
                             </h2>
-                            <p><span class="font-semibold">Teacher:</span> ${result.name}</p>
                             <p><span class="font-semibold">Term:</span> ${result.term}</p>
                             <p><span class="font-semibold">Topic:</span> ${result.topic}</p>
                             <p><span class="font-semibold">Week:</span> ${result.week}</p>
