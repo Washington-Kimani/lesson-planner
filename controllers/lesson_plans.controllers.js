@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import { createLessonPlan, deleteLessonPlanById, getLessonPlanById, getLessonPlans, search } from "../services/lesson_plan.services.js";
+import { createLessonPlan, deleteLessonPlanById, getLessonPlanById, getLessonPlans, search, updateLessonPlan } from "../services/lesson_plan.services.js";
 
 
 export const getAllLessonPlans = async (req, res) => {
@@ -14,6 +14,12 @@ export const getAllLessonPlans = async (req, res) => {
 
     //load all the lesson plans
     return res.render("lesson_plans", { title: "All Students", lessonPlansWithIndex, user: req.user, errors: req.flash('errors') });
+}
+
+export const viewLessonPlan = async (req, res)=>{
+    const {id} = req.params;
+    const lessonPlan = await getLessonPlanById(id);
+    return res.render("lesson_plan", {title: "Lesson Plan", lessonPlan, user: req.user, errors: req.flash('errors')});
 }
 
 //load the page for creating a new lesson plan
@@ -52,12 +58,26 @@ export const createNewLessonPlan = async (req, res) => {
 };
 
 //load the edit lesson plan page i.e for iclusive of the data
-export const getEditLessonPlan = async (req,res)=>{
+export const getEditLessonPlan = async (req, res) => {
     const { id } = req.params;
     // console.log(id);
     const lessonPlan = await getLessonPlanById(id);
     // console.log(lessonPlan);
+    lessonPlan.date = lessonPlan.date.toISOString().split('T')[0];
     return res.render('edit_lesson_plan', { title: "Edit Lesson Plan", lessonPlan, errors: req.flash('errors'), user: req.user });
+}
+
+export const editTheLessonPlan = async (req, res) => {
+    const { id } = req.params;
+    const lesson_plan = req.body;
+    try {
+        await updateLessonPlan(lesson_plan, id);
+        return res.redirect('/lesson_plans');
+    } catch (error) {
+        console.error('Error editing student:', error);
+        req.flash('errors', error.message);
+        return res.redirect(`/edit_lesson_plan/${id}`);
+    }
 }
 
 export const deleteLessonPlan = async (req, res) => {

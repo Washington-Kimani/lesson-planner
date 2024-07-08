@@ -34,7 +34,7 @@ export const createLessonPlan = async (lesson_plan, teacher_id) => {
 export const getLessonPlanById = async (id) => {
     try {
         const [rows] = await pool.query(`SELECT * FROM lesson_plans WHERE id = ?`, [id]);
-        return rows;
+        return rows[0];
     } catch (error) {
         throw error;
     }

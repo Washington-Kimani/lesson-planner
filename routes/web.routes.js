@@ -5,7 +5,7 @@ import { checkLoggedIn, checkLoggedOut, getPageLogin, postLogOut } from '../cont
 import { createNewUser, getPageRegister } from '../controllers/register.controllers.js';
 import { allStudents, createNewStudent, deleteStudent, getCreateStudent, seachStudent } from '../controllers/students.controllers.js';
 import { allTeachers } from '../controllers/teacher.controllers.js';
-import { createNewLessonPlan, getAllLessonPlans, getCreateLesson, getEditLessonPlan } from '../controllers/lesson_plans.controllers.js';
+import { createNewLessonPlan, deleteLessonPlan, editTheLessonPlan, getAllLessonPlans, getCreateLesson, getEditLessonPlan, viewLessonPlan } from '../controllers/lesson_plans.controllers.js';
 
 // Init all passport
 initPassportLocal();
@@ -46,6 +46,9 @@ export const initWebRoutes = (app) => {
     /* lesson routes */
     router.get('/lesson_plans', checkLoggedIn, getAllLessonPlans);
 
+    //page to view one lesson plan
+    router.get('/lesson_plan/:id', checkLoggedIn, viewLessonPlan);
+
     //new lesson plan page
     router.get('/new_lesson_plan', checkLoggedIn, getCreateLesson);
 
@@ -54,6 +57,12 @@ export const initWebRoutes = (app) => {
 
     //edit lesson plan page i.e the form with pre-filled data
     router.get('/edit_lesson_plan/:id', checkLoggedIn, getEditLessonPlan);
+
+    //actually edit the lesson plan
+    router.post('/edit_lesson_plan/:id', checkLoggedIn, editTheLessonPlan);
+
+    //delete the lesson plan
+    router.post('/delete_lesson_plan/:id', checkLoggedIn, deleteLessonPlan);
 
 
     /* AUTH ROUTES */
