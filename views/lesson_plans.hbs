@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/styles/style.css">
     {{!-- tailwind css --}}
     <script src="https://cdn.tailwindcss.com"></script>
+    {{!-- search js file --}}
+    <script src="/js/searchPlan.js" defer></script>
     <title>{{title}}</title>
 </head>
 <body class="bg-gray-100 p-6">
@@ -24,9 +26,12 @@
             <h1 class="text-3xl font-bold">Lesson Plans</h1>
             <a href="/new_lesson_plan" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-1 px-4 rounded">Create Lesson Plan</a>
         </div>
+        <form>
+            <input type="search" class="w-full px-2 py-1 rounded shadow-lg bg-red-200 mb-6" name="query" id="search" placeholder="Search lesson plans...">
+        </form>
 
         {{#if lessonPlansWithIndex}}
-        <div class="grid gap-6">
+        <div class="grid gap-6" id="results">
             {{#each lessonPlansWithIndex}}
             <div class="border border-gray-200 rounded-lg overflow-hidden shadow-lg">
                 <div class="p-6">
@@ -42,40 +47,8 @@
                     <p><span class="font-semibold">Date:</span> {{ date }}</p>
                     <hr class="my-4">
                     <a href="/lesson_plan/{{id}}" class="py-1 px-2 rounded bg-yellow-400">View Lesson Plan</a>
-                    {{!-- <p class="font-semibold">Objectives:</p>
-                    <p>{{{ objectives }}}</p>
-                    <hr class="my-4">
-                    <p class="font-semibold">Standards:</p>
-                    <p>{{{ standards }}}</p>
-                    <hr class="my-4">
-                    <p class="font-semibold">Materials Needed:</p>
-                    <p>{{{ materials_needed }}}</p>
-                    <hr class="my-4">
-                    <p class="font-semibold">Teaching Method:</p>
-                    <p>{{{ teaching_method }}}</p>
-                    <hr class="my-4">
-                    <p class="font-semibold">Instructional Procedures:</p>
-                    <p>{{{ instructional_procedures }}}</p>
-                    <hr class="my-4">
-                    <p class="font-semibold">Assessment:</p>
-                    <p>{{{ assessment }}}</p>
-                    <hr class="my-4">
-                    <p class="font-semibold">Homework:</p>
-                    <p>{{{ homework }}}</p>
-                    <hr class="my-4">
-                    <p class="font-semibold">Feedback:</p>
-                    <p>{{{ feedback }}}</p>
-                    <hr class="my-4">
-                    <p class="font-semibold">Adjustment:</p>
-                    <p>{{{ adjustment }}}</p> --}}
                 </div>
             </div>
-            {{!-- <div class="w-full flex items-center justify-around">
-                <a class="py-1 px-2 bg-green-400 rounded w-64 text-center shadow-lg" href="/edit_lesson_plan/{{id}}">Edit This Lesson Plan</a>
-                <form action="/delete_lesson_plan" method="post">
-                    <button class="py-1 px-2 bg-red-400 rounded w-64 text-center shadow-lg" type="submit">Delete This Lesson Plan</button>
-                </form>
-            </div> --}}
             {{/each}}
         </div>
         {{else}}

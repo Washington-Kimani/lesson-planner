@@ -29,9 +29,9 @@ export const getCreateLesson = async (req, res) => {
 
 //search a lesson plan
 export const searchLessonPlan = async (req, res) => {
-    const teacher_id = req.user.id,
-        { query } = req.params
-    const results = await search(teacher_id, query);
+    const teacher_id = req.user.id
+    const {query} = req.query;
+    const results = await search(query, teacher_id);
     res.send(results);
 }
 
