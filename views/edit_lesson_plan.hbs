@@ -99,7 +99,8 @@
         </nav>
     </div>
     <div class="container flex flex-col mt-20">
-        <h2 class="text-center text-3xl font-bold">Lesson Plan Schedule</h2>
+        <h2 class="text-center text-3xl font-bold">Edit This Lesson Plan</h2>
+        <hr class="h-2">
         {{#if lessonPlan}}
             <form action="/edit_lesson_plan/{{lessonPlan.id}}" class="w-full align-center" method="post">
                 <section class="flex flex-col lg:flex-row w-full gap-2">
