@@ -1,25 +1,25 @@
 import { pool } from "../configs/db.config.js";
 
 
-export const getAllStudents = async () => {
+export const getAllStudents = async (teacher_id) => {
     try {
-        const [rows] = await pool.query(`SELECT * FROM students`);
+        const [rows] = await pool.query(`SELECT * FROM students where teacher_id = ?`, [teacher_id]);
         return rows;
     } catch (error) {
         throw error;
     }
 };
 
-export const search = async query => {
+export const search = async (query, teacher_id) => {
     try {
-        const [rows] = await pool.query(`SELECT * FROM students WHERE full_name LIKE '%${query}%'`);
+        const [rows] = await pool.query(`SELECT * FROM students WHERE teacher_id = ? AND full_name LIKE '%${query}%'`, [teacher_id]);
         return rows;
     } catch (error) {
         throw error;
     }
 }
 
-export const createStudent = async student => {
+export const createStudent = async (student, teacher_id) => {
     try {
         const isExist = await checkStudentExists(student.admission_number);
 
@@ -27,12 +27,9 @@ export const createStudent = async student => {
             throw new Error(`This student "${student.full_name}" has already been registered`);
         }
 
-        const { full_name, admission_number, guardian_or_parent_number, grade, home_address, comments, subject_one, subject_two } = student
+        const studentData = {...student, teacher_id};
+        const result = await pool.query(`INSERT INTO students SET ?`, [studentData]);
 
-        const result = await pool.query(
-            `INSERT INTO students (full_name, admission_number, guardian_or_parent_number, grade, home_address, comments, subject_one, subject_two) VALUES (?,?,?,?,?,?,?,?)`,
-            [full_name, admission_number, guardian_or_parent_number, grade, home_address, comments, subject_one, subject_two],
-        );
 
         console.log('User created successfully:', result);
         return `Student created successfully`;

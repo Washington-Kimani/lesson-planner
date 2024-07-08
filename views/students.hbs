@@ -95,10 +95,11 @@
             <a href="/" class="text-white hover:text-pink-400">Dashboard</a>
             <a href="/teachers" class="text-white hover:text-pink-400">Teachers</a>
             <a href="/students" class="text-white hover:text-pink-400">Students</a>
-            <a href="/subjects" class="text-white hover:text-pink-400">Subjects</a>
+            <a href="/lesson_plans" class="text-white hover:text-pink-400">Lesson Plans</a>
         </nav>
     </div>
-    <div class="container search-container mt-20">
+    <h1 class="text-3xl text-center text-white font-bold mb-4 mt-20">List of {{user.fullnames}}'s Students</h1>
+    <div class="container search-container mt-10">
         <input type="search" class="py-1 px-2" name="query" id="search" placeholder="search students"/>
         <div class="w-full flex items-center justify-around mt-6">
             <h1 class="text-lg font-bold">

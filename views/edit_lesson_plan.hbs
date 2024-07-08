@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Planner</title>
+    {{!-- general styles --}}
+    <link rel="stylesheet" href="/styles/style.css">
+    {{!-- tailwind css --}}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <div
+        class="fixed w-full top-0 left-0 flex justify-center items-center bg-gradient-to-b from-emerald-500 via-emerald-300 to-teal-900 py-4 px-6">
+        <nav class="flex space-x-4">
+            <a href="/" class="text-white hover:text-pink-400">Dashboard</a>
+            <a href="/teachers" class="text-white hover:text-pink-400">Teachers</a>
+            <a href="/students" class="text-white hover:text-pink-400">Students</a>
+            <a href="/lesson_plans" class="text-white hover:text-pink-400">Lesson Plans</a>
+        </nav>
+    </div>
+    <div class="container flex flex-col mt-20">
+        <h2 class="text-center text-3xl font-bold">Lesson Plan Schedule</h2>
+        <form action=`/edit_lesson_plan/{{lessonPlan.id}}` class="w-full align-center" method="post">
+            <section class="flex flex-col lg:flex-row w-full gap-2">
+                <div class="form-group w-full">
+                    <label for="term">Term</label>
+                    <input class="px-2 py-1 shadow-lg shadow-gray-700/50" type="text" id="term" name="term" value="{{lessonPlan.subject}}" required>
+                </div>
+                <div class="form-group w-full">
+                    <label for="subject">Subject</label>
+                    <input class="px-2 py-1 shadow-lg shadow-gray-700/50" type="text" id="subject" name="subject"
+                        required>
+                </div>
+                <div class="form-group w-full">
+                    <label for="topic">Topic</label>
+                    <input class="px-2 py-1 shadow-lg shadow-gray-700/50" type="text" id="topic" name="topic" required>
+                </div>
+            </section>
+            <section class="flex flex-col lg:flex-row w-full gap-2">
+                <div class="form-group w-full">
+                    <label for="week">Week</label>
+                    <input class="px-2 py-1 shadow-lg shadow-gray-700/50" type="number" id="week" name="week" required>
+                </div>
+                <div class="form-group w-full">
+                    <label for="lesson_title">Lesson Title</label>
+                    <input class="px-2 py-1 shadow-lg shadow-gray-700/50" type="text" id="lesson_title"
+                        name="lesson_title" required>
+                </div>
+                <div class="form-group w-full">
+                    <label for="grade_level">Grade Level</label>
+                    <input class="px-2 py-1 shadow-lg shadow-gray-700/50" type="text" id="grade_level"
+                        name="grade_level" required>
+                </div>
+                <div class="form-group w-full">
+                    <label for="date">Date</label>
+                    <input class="px-2 py-1 shadow-lg shadow-gray-700/50" type="date" id="date" name="date" required>
+                </div>
+            </section>
+            <div class="form-group">
+                <label for="objectives">Objectives</label>
+                <textarea class="px-2 py-1 shadow-lg shadow-gray-700/50" id="objectives" name="objectives" value="{{lessonPlan.objectives}}" rows="4"
+                    required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="standards">Standards</label>
+                <textarea class="px-2 py-1 shadow-lg shadow-gray-700/50" id="standards" name="standards"
+                    rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="materials_needed">Materials/Resources Needed</label>
+                <textarea class="px-2 py-1 shadow-lg shadow-gray-700/50" id="materials_needed" name="materials_needed"
+                    rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="teaching_method">Teaching method</label>
+                <textarea class="px-2 py-1 shadow-lg shadow-gray-700/50" id="teaching_method" name="teaching_method"
+                    rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="instructional_procedures">Instructional Procedures</label>
+                <textarea class="px-2 py-1 shadow-lg shadow-gray-700/50" id="instructional_procedures"
+                    name="instructional_procedures" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="assessment">Assessment</label>
+                <textarea class="px-2 py-1 shadow-lg shadow-gray-700/50" id="assessment" name="assessment"
+                    rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="homework">Homework</label>
+                <textarea class="px-2 py-1 shadow-lg shadow-gray-700/50" id="homework" name="homework"
+                    rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="feedback">Feedback</label>
+                <textarea class="px-2 py-1 shadow-lg shadow-gray-700/50" id="feedback" name="feedback"
+                    rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="adjustment">Adjustment</label>
+                <textarea class="px-2 py-1 shadow-lg shadow-gray-700/50" id="adjustment" name="adjustment"
+                    rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn place-self-end">Edit Lesson Plan</button>
+        </form>
+    </div>
+</body>
+
+</html>

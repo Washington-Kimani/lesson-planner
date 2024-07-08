@@ -2,7 +2,8 @@ import { validationResult } from "express-validator";
 import { createStudent,deleteStudentById , getAllStudents, search } from "../services/student.services.js";
 
 export const allStudents = async (req, res) => {
-    const students = await getAllStudents();
+    const teacher_id = req.user.id;
+    const students = await getAllStudents(teacher_id);
     // Add an index starting from 1 to each student object
     const studentsWithIndex = students.map((student, index) => ({
         ...student,
@@ -11,12 +12,15 @@ export const allStudents = async (req, res) => {
     return res.render("students", { title: "All Students", students: studentsWithIndex, user: req.user });
 }
 
+//search a student
 export const seachStudent = async (req, res) => {
     const { query } = req.query;
-    const results = await search(query);
+    const teacher_id = req.user.id;
+    const results = await search(query, teacher_id);
     return res.send(results);
 }
 
+//get the create-new-student page
 export const getCreateStudent = (req, res) => {
     return res.render("new_student", {
         errors: req.flash("errors"),
@@ -26,6 +30,7 @@ export const getCreateStudent = (req, res) => {
 
 
 export const createNewStudent = async (req, res) => {
+    const teacher_id = req.user.id;
     // Validate required fields
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -36,7 +41,7 @@ export const createNewStudent = async (req, res) => {
     // Create new student
     const studentData = req.body;
     try {
-        await createStudent(studentData);
+        await createStudent(studentData, teacher_id);
         // Redirect to students list immediately after creation
         return res.redirect('/students');
     } catch (error) {

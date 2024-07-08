@@ -1,6 +1,8 @@
 import { validationResult } from "express-validator";
 import { createUser } from "../services/register.services.js";
 
+
+//load the registration page
 export const getPageRegister = (req, res) => {
     return res.render("register", {
         errors: req.flash("errors"),
@@ -8,6 +10,7 @@ export const getPageRegister = (req, res) => {
     });
 };
 
+//register a new teacher
 export const createNewUser = async (req, res) => {
     // Validate required fields
     let errorsArr = [];

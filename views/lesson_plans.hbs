@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{!-- general styles --}}
+    <link rel="stylesheet" href="/styles/style.css">
+    {{!-- tailwind css --}}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{{title}}</title>
+</head>
+<body class="bg-gray-100 p-6">
+    <div
+        class="fixed w-full top-0 left-0 flex justify-center items-center bg-gradient-to-b from-emerald-500 via-emerald-300 to-teal-900 py-4 px-6">
+        <nav class="flex space-x-4">
+            <a href="/" class="text-white hover:text-pink-400">Dashboard</a>
+            <a href="/teachers" class="text-white hover:text-pink-400">Teachers</a>
+            <a href="/students" class="text-white hover:text-pink-400">Students</a>
+            <a href="/lesson_plans" class="text-white hover:text-pink-400">Lesson Plans</a>
+        </nav>
+    </div>
+    <div class="mx-auto bg-white p-6 rounded shadow mt-20">
+        <div class="w-full flex justify-around items-center mb-6">
+            <h1 class="text-3xl font-bold">Lesson Plans</h1>
+            <a href="/new_lesson_plan" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-1 px-4 rounded">Create Lesson Plan</a>
+        </div>
+
+        {{#if lessonPlansWithIndex}}
+        <div class="grid gap-6">
+            {{#each lessonPlansWithIndex}}
+            <div class="border border-gray-200 rounded-lg overflow-hidden shadow-lg">
+                <div class="p-6">
+                    <h2 class="text-xl flex gap-2 font-bold mb-2">
+                        <p>{{index}}.</p>
+                        <p>{{ lesson_title }}</p>
+                    </h2>
+                    <p><span class="font-semibold">Teacher:</span> {{ name }}</p>
+                    <p><span class="font-semibold">Term:</span> {{ term }}</p>
+                    <p><span class="font-semibold">Topic:</span> {{ topic }}</p>
+                    <p><span class="font-semibold">Week:</span> {{ week }}</p>
+                    <p><span class="font-semibold">Grade Level:</span> {{ grade_level }}</p>
+                    <p><span class="font-semibold">Date:</span> {{ date }}</p>
+                    <hr class="my-4">
+                    <p class="font-semibold">Objectives:</p>
+                    <p>{{{ objectives }}}</p>
+                    <hr class="my-4">
+                    <p class="font-semibold">Standards:</p>
+                    <p>{{{ standards }}}</p>
+                    <hr class="my-4">
+                    <p class="font-semibold">Materials Needed:</p>
+                    <p>{{{ materials_needed }}}</p>
+                    <hr class="my-4">
+                    <p class="font-semibold">Teaching Method:</p>
+                    <p>{{{ teaching_method }}}</p>
+                    <hr class="my-4">
+                    <p class="font-semibold">Instructional Procedures:</p>
+                    <p>{{{ instructional_procedures }}}</p>
+                    <hr class="my-4">
+                    <p class="font-semibold">Assessment:</p>
+                    <p>{{{ assessment }}}</p>
+                    <hr class="my-4">
+                    <p class="font-semibold">Homework:</p>
+                    <p>{{{ homework }}}</p>
+                    <hr class="my-4">
+                    <p class="font-semibold">Feedback:</p>
+                    <p>{{{ feedback }}}</p>
+                    <hr class="my-4">
+                    <p class="font-semibold">Adjustment:</p>
+                    <p>{{{ adjustment }}}</p>
+                </div>
+            </div>
+            <div class="w-full flex items-center justify-around">
+                <a class="py-1 px-2 bg-green-400 rounded w-64 text-center shadow-lg" href="/edit_lesson_plan/{{id}}">Edit This Lesson Plan</a>
+                <form action="/delete_lesson_plan" method="post">
+                    <button class="py-1 px-2 bg-red-400 rounded w-64 text-center shadow-lg" type="submit">Delete This Lesson Plan</button>
+                </form>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <p>No lesson plans found.</p>
+        {{/if}}
+    </div>
+</body>
+</html>
