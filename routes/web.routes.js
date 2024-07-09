@@ -5,7 +5,7 @@ import { checkLoggedIn, checkLoggedOut, getPageLogin, postLogOut } from '../cont
 import { createNewUser, getPageRegister } from '../controllers/register.controllers.js';
 import { allStudents, createNewStudent, deleteStudent, getCreateStudent, seachStudent } from '../controllers/students.controllers.js';
 import { allTeachers } from '../controllers/teacher.controllers.js';
-import { createNewLessonPlan, deleteLessonPlan, editTheLessonPlan, getAllLessonPlans, getCreateLesson, getEditLessonPlan, searchLessonPlan, viewLessonPlan } from '../controllers/lesson_plans.controllers.js';
+import { createNewLessonPlan, deleteLessonPlan, editTheLessonPlan, getAllLessonPlans, getCreateLesson, getEditLessonPlan, searchLessonPlan, subjectOneLessonPlans, subjectTwoLessonPlans, viewLessonPlan } from '../controllers/lesson_plans.controllers.js';
 
 // Init all passport
 initPassportLocal();
@@ -44,7 +44,10 @@ export const initWebRoutes = (app) => {
     });
 
     /* lesson routes */
-    router.get('/lesson_plans', checkLoggedIn, getAllLessonPlans);
+    //subject one lesson plans route
+    router.get('/subject_one_lesson_plans', checkLoggedIn, subjectOneLessonPlans);
+    //subject one lesson plans route
+    router.get('/subject_two_lesson_plans', checkLoggedIn, subjectTwoLessonPlans);
 
     //search lesson plan
     router.get('/search_plan', checkLoggedIn, searchLessonPlan);

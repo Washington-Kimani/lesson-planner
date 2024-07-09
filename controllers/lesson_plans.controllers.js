@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import { createLessonPlan, deleteLessonPlanById, getLessonPlanById, getLessonPlans, search, updateLessonPlan } from "../services/lesson_plan.services.js";
+import { createLessonPlan, deleteLessonPlanById, getLessonPlanById, getLessonPlans, getSubjectOnePlans, getSubjectTwoPlans, search, updateLessonPlan } from "../services/lesson_plan.services.js";
 
 
 export const getAllLessonPlans = async (req, res) => {
@@ -27,6 +27,37 @@ export const getCreateLesson = async (req, res) => {
     return res.render('new_lesson_plan', { title: "Create New Lesson PLan", errors: req.flash('errors'), user: req.user })
 }
 
+//subject one lesson plans
+export const subjectOneLessonPlans = async (req,res)=>{
+    const {id, subject_one} = req.user;
+    const lessonPlans = await getSubjectOnePlans(id, subject_one);
+
+    //render the page
+    const lessonPlansWithIndex = lessonPlans.map((lessonPlan, index) => ({
+        ...lessonPlan,
+        index: index + 1,
+        name: req.user.fullnames
+    }));
+
+    //load all the lesson plans
+    return res.render("lesson_plans", { title: "All Students", lessonPlansWithIndex, user: req.user, errors: req.flash('errors') });
+}
+//subject two lesson plans
+export const subjectTwoLessonPlans = async (req,res)=>{
+    const {id, subject_two} = req.user;
+    const lessonPlans = await getSubjectTwoPlans(id, subject_two);
+
+    //render the page
+    const lessonPlansWithIndex = lessonPlans.map((lessonPlan, index) => ({
+        ...lessonPlan,
+        index: index + 1,
+        name: req.user.fullnames
+    }));
+
+    //load all the lesson plans
+    return res.render("lesson_plans", { title: "All Students", lessonPlansWithIndex, user: req.user, errors: req.flash('errors') });
+}
+
 //search a lesson plan
 export const searchLessonPlan = async (req, res) => {
     const teacher_id = req.user.id
@@ -49,7 +80,7 @@ export const createNewLessonPlan = async (req, res) => {
     try {
         await createLessonPlan(lesson_plan, teacher_id);
         // Redirect to students list immediately after creation
-        return res.redirect('/lesson_plans');
+        return res.redirect('/');
     } catch (error) {
         console.error('Error creating student:', error);
         req.flash('errors', error.message);

@@ -86,13 +86,13 @@
             <a href="/" class="text-white hover:text-pink-400">Dashboard</a>
             <a href="/teachers" class="text-white hover:text-pink-400">Teachers</a>
             <a href="/students" class="text-white hover:text-pink-400">Students</a>
-            <a href="/lesson_plans" class="text-white hover:text-pink-400">Lesson Plans</a>
+            <a href="/new_lesson_plan" class="text-white hover:text-pink-400">Create New Lesson Plan</a>
         </nav>
     </div>
     <h1>User Dashboard</h1>
     <div class="container flex flex-col mt-20">
-        <div class="w-full flex gap-3 mb-3 justify-center">
-            <p>Welcome</p>
+        <div class="w-full flex gap-2 mb-3 justify-center">
+            <p>Welcome:</p>
             <p>{{user.fullnames}}</p>
         </div>
         <div class="w-full flex gap-3 mb-3 justify-center">
@@ -105,12 +105,10 @@
             <div class="line"></div>
 
             <div class="w-full flex flex-col justify-around items-start">
-                <h2>My Current Subjects:</h2>
-                <section class="w-full flex">
-                    <ul class="list-disc">
-                        <li class="pl-4 w-full flex items-start">{{user.subject_one}}</li>
-                        <li class="pl-4 w-full flex items-start">{{user.subject_two}}</li>
-                    </ul>
+                <h2>My Current Subjects Lesson Plans:</h2>
+                <section class="w-full flex gap-3 items-center justify-around mb-3">
+                    <a href="/subject_one_lesson_plans" class="px-2 py-1 rounded shadow-lg shadow-blue-500/50 bg-emerald-500 w-full">{{user.subject_one}}</a>
+                    <a href="/subject_two_lesson_plans" class="px-2 py-1 rounded shadow-lg shadow-blue-500/50 bg-emerald-500 w-full">{{user.subject_two}}</a>
                 </section>
             </div>
         </div>

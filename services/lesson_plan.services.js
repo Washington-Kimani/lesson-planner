@@ -40,6 +40,24 @@ export const getLessonPlanById = async (id) => {
     }
 }
 
+export const getSubjectOnePlans = async (id, subject_one) => {
+    try {
+        const [rows] = await pool.query(`SELECT * FROM lesson_plans WHERE teacher_id =? AND subject =?`, [id, subject_one]);
+        return rows;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getSubjectTwoPlans = async (id, subject_two) => {
+    try {
+        const [rows] = await pool.query(`SELECT * FROM lesson_plans WHERE teacher_id =? AND subject =?`, [id, subject_two]);
+        return rows;
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 export const updateLessonPlan = async (lesson_plan, id) => {
     try {
