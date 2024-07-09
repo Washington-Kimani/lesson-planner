@@ -103,7 +103,7 @@ export const editTheLessonPlan = async (req, res) => {
     const lesson_plan = req.body;
     try {
         await updateLessonPlan(lesson_plan, id);
-        return res.redirect('/lesson_plans');
+        return res.redirect('/');
     } catch (error) {
         console.error('Error editing student:', error);
         req.flash('errors', error.message);
@@ -116,7 +116,7 @@ export const deleteLessonPlan = async (req, res) => {
     const { id } = req.params;
     try {
         await deleteLessonPlanById(id, teacher_id);
-        return res.redirect('/lesson_plans');
+        return res.redirect('/');
     } catch (error) {
         console.error('Error deleting student:', error);
         req.flash('errors', error.message);
