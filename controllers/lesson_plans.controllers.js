@@ -68,7 +68,7 @@ export const searchLessonPlan = async (req, res) => {
     
 
     // Assuming lessonPlans are prepared with necessary details
-    res.json(lessonPlans);
+    res.json(lessonPlans.reverse());
 }
 
 export const createNewLessonPlan = async (req, res) => {
