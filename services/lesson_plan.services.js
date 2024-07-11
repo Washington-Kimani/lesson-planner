@@ -1,18 +1,8 @@
 import { pool } from "../configs/db.config.js";
 
-
-export const getLessonPlans = async (teacher_id) => {
+export const search = async (query, id) => {
     try {
-        const [rows] = await pool.query(`SELECT * FROM lesson_plans WHERE teacher_id = ?`, [teacher_id]);
-        return rows;
-    } catch (error) {
-        throw error;
-    }
-}
-
-export const search = async (query, teacher_id) => {
-    try {
-        const [rows] = await pool.query(`SELECT * FROM lesson_plans WHERE teacher_id = ? AND lesson_title LIKE '%${query}%'`, [teacher_id])
+        const [rows] = await pool.query(`SELECT * FROM lesson_plans WHERE teacher_id = ? AND lesson_title LIKE '%${query}%'`, [id])
         return rows;
     } catch (error) {
         throw error;
@@ -42,7 +32,7 @@ export const getLessonPlanById = async (id) => {
 
 export const getSubjectOnePlans = async (id, subject_one) => {
     try {
-        const [rows] = await pool.query(`SELECT * FROM lesson_plans WHERE teacher_id =? AND subject =?`, [id, subject_one]);
+        const [rows] = await pool.query(`SELECT * FROM lesson_plans WHERE teacher_id =? AND subject =?`, [id, subject_one.toString()]);
         return rows;
     } catch (error) {
         throw error;
@@ -51,7 +41,7 @@ export const getSubjectOnePlans = async (id, subject_one) => {
 
 export const getSubjectTwoPlans = async (id, subject_two) => {
     try {
-        const [rows] = await pool.query(`SELECT * FROM lesson_plans WHERE teacher_id =? AND subject =?`, [id, subject_two]);
+        const [rows] = await pool.query(`SELECT * FROM lesson_plans WHERE teacher_id =? AND subject =?`, [id, subject_two.toString()]);
         return rows;
     } catch (error) {
         throw error;

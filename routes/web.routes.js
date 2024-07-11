@@ -5,7 +5,7 @@ import { checkLoggedIn, checkLoggedOut, getPageLogin, postLogOut } from '../cont
 import { createNewUser, getPageRegister } from '../controllers/register.controllers.js';
 import { allStudents, createNewStudent, deleteStudent, getCreateStudent, seachStudent } from '../controllers/students.controllers.js';
 import { allTeachers } from '../controllers/teacher.controllers.js';
-import { createNewLessonPlan, deleteLessonPlan, editTheLessonPlan, getAllLessonPlans, getCreateLesson, getEditLessonPlan, searchLessonPlan, subjectOneLessonPlans, subjectTwoLessonPlans, viewLessonPlan } from '../controllers/lesson_plans.controllers.js';
+import { createNewLessonPlan, deleteLessonPlan, editTheLessonPlan, getCreateLesson, getEditLessonPlan, searchLessonPlan, subjectOneLessonPlans, subjectTwoLessonPlans, viewLessonPlan } from '../controllers/lesson_plans.controllers.js';
 
 // Init all passport
 initPassportLocal();

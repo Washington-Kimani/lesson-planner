@@ -1,10 +1,25 @@
 const searchInput = document.querySelector('#search');
 const resultsBody = document.querySelector('#results');
+const subjectSelect = document.querySelector('#subject');
 
-loadData(''); // Initial load with empty query
 
-function loadData(query = '') {
-    fetch(`/search_plan?query=${encodeURIComponent(query)}`) // Ensure the endpoint is correct
+// Event listener for search input
+searchInput.addEventListener('input', function () {
+    const query = searchInput.value.trim();
+    const selectedSubject = subjectSelect.textContent;
+    loadData(query, selectedSubject);
+});
+
+// Initial load with empty query and no specific subject filter
+loadData('',subject.textContent);
+
+function loadData(query, subject) {
+    let url = `/search_plan?query=${encodeURIComponent(query)}`;
+    if (subject) {
+        url += `&subject=${encodeURIComponent(subject)}`;
+    }
+
+    fetch(url)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -19,7 +34,7 @@ function loadData(query = '') {
                     <div class="border border-gray-200 rounded-lg overflow-hidden shadow-lg">
                         <div class="p-6">
                             <h2 class="text-xl flex gap-2 font-bold mb-2">
-                                <p>${index+1}.</p>
+                                <p>${index + 1}.</p>
                                 <p>${result.lesson_title}</p> <!-- Use result object for lesson_title -->
                             </h2>
                             <p><span class="font-semibold">Term:</span> ${result.term}</p>
@@ -35,7 +50,7 @@ function loadData(query = '') {
                 });
             } else {
                 html += `
-                <p>No lesson plans found.</p>
+                <p>No lesson plans found here.</p>
                 `;
             }
             resultsBody.innerHTML = html;
@@ -44,8 +59,3 @@ function loadData(query = '') {
             console.error('Error fetching data:', error);
         });
 }
-
-searchInput.addEventListener('input', function () {
-    const query = searchInput.value.trim();
-    loadData(query);
-});

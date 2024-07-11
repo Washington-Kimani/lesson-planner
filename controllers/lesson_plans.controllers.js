@@ -1,20 +1,5 @@
 import { validationResult } from "express-validator";
-import { createLessonPlan, deleteLessonPlanById, getLessonPlanById, getLessonPlans, getSubjectOnePlans, getSubjectTwoPlans, search, updateLessonPlan } from "../services/lesson_plan.services.js";
-
-
-export const getAllLessonPlans = async (req, res) => {
-    const teacher_id = req.user.id;
-    const lessonPlans = await getLessonPlans(teacher_id);
-    // Add an index starting from 1 to each lesson plan object
-    const lessonPlansWithIndex = lessonPlans.map((lessonPlan, index) => ({
-        ...lessonPlan,
-        index: index + 1,
-        name: req.user.fullnames
-    }));
-
-    //load all the lesson plans
-    return res.render("lesson_plans", { title: "All Students", lessonPlansWithIndex, user: req.user, errors: req.flash('errors') });
-}
+import { createLessonPlan, deleteLessonPlanById, getLessonPlanById, getSubjectOnePlans, getSubjectTwoPlans, search, updateLessonPlan } from "../services/lesson_plan.services.js";
 
 export const viewLessonPlan = async (req, res)=>{
     const {id} = req.params;
@@ -36,11 +21,11 @@ export const subjectOneLessonPlans = async (req,res)=>{
     const lessonPlansWithIndex = lessonPlans.map((lessonPlan, index) => ({
         ...lessonPlan,
         index: index + 1,
-        name: req.user.fullnames
+        name: req.user.fullnames,
     }));
 
     //load all the lesson plans
-    return res.render("lesson_plans", { title: "All Students", lessonPlansWithIndex, user: req.user, errors: req.flash('errors') });
+    return res.render("lesson_plans", { title: `${req.user.subject_one} Lesson Plans`, lessonPlansWithIndex, subject: req.user.subject_one, user: req.user, errors: req.flash('errors') });
 }
 //subject two lesson plans
 export const subjectTwoLessonPlans = async (req,res)=>{
@@ -51,19 +36,39 @@ export const subjectTwoLessonPlans = async (req,res)=>{
     const lessonPlansWithIndex = lessonPlans.map((lessonPlan, index) => ({
         ...lessonPlan,
         index: index + 1,
-        name: req.user.fullnames
+        name: req.user.fullnames,
     }));
 
+
     //load all the lesson plans
-    return res.render("lesson_plans", { title: "All Students", lessonPlansWithIndex, user: req.user, errors: req.flash('errors') });
+    return res.render("lesson_plans", { title: `${req.user.subject_two} Lesson Plans`, lessonPlansWithIndex, subject: req.user.subject_two, user: req.user, errors: req.flash('errors') });
 }
 
 //search a lesson plan
 export const searchLessonPlan = async (req, res) => {
-    const teacher_id = req.user.id
-    const {query} = req.query;
-    const results = await search(query, teacher_id);
-    res.send(results);
+    const query = req.query.query; // Search query from frontend
+    const subject = req.query.subject; // Subject filter from frontend
+    const id = req.user.id
+
+    let lessonPlans = [];
+
+    if (query) {
+        // Perform search based on query (if provided) and on the specific subject
+        const plans = await search(query, id);
+        lessonPlans = plans.filter(plan=>plan.subject === subject);
+    } else if (subject) {
+        // Retrieve lesson plans based on selected subject
+        if (subject === req.user.subject_one) {
+            lessonPlans = await getSubjectOnePlans(req.user.id, req.user.subject_one);
+        } else if (subject === req.user.subject_two) {
+            lessonPlans = await getSubjectTwoPlans(req.user.id, req.user.subject_two);
+        }
+    }
+
+    
+
+    // Assuming lessonPlans are prepared with necessary details
+    res.json(lessonPlans);
 }
 
 export const createNewLessonPlan = async (req, res) => {
